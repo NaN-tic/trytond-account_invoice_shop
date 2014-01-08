@@ -1,0 +1,25 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:account.invoice:"
+msgid "Invoice have not related a shop"
+msgstr "La factura no té una botiga relacionada"
+
+msgctxt "error:account.invoice:"
+msgid "What shop would like to sell? Go to preferences"
+msgstr ""
+"A quina botiga voleu vendre? Aneu a les vostres preferencies per configurar "
+"la vostra botiga."
+
+msgctxt "error:account.invoice:"
+msgid ""
+"You cannot edit this invoice because you do not have permission to edit in "
+"this shop."
+msgstr ""
+"No pot editar aquesta factura perquè no disposa de permís d'edició sobre la "
+"botiga relacionada"
+
+msgctxt "field:account.invoice,shop:"
+msgid "Shop"
+msgstr "Botiga"
