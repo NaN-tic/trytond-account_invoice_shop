@@ -29,3 +29,9 @@ class Invoice:
         User = Pool().get('res.user')
         user = User(Transaction().user)
         return user.shop.id if user.shop else None
+
+
+    def _credit(self):
+        res = super(Invoice, self)._credit()
+        res['shop'] = getattr(self, 'shop').id
+        return res
