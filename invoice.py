@@ -22,14 +22,17 @@ class Sale:
 class Invoice:
     __name__ = 'account.invoice'
 
-    shop = fields.Many2One('sale.shop', 'Shop', required=True)
+    shop = fields.Many2One('sale.shop', 'Shop',
+        states={
+            'required': Eval('type').in_(['out_invoice', 'out_credit_note']),
+            },
+        depends=['type'])
 
     @staticmethod
     def default_shop():
         User = Pool().get('res.user')
         user = User(Transaction().user)
         return user.shop.id if user.shop else None
-
 
     def _credit(self):
         res = super(Invoice, self)._credit()
