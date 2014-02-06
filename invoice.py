@@ -1,6 +1,7 @@
 # This file is part account_invoice_shop module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
+from trytond import backend
 from trytond.model import fields
 from trytond.transaction import Transaction
 from trytond.pool import Pool, PoolMeta
@@ -27,6 +28,14 @@ class Invoice:
             'required': Eval('type').in_(['out_invoice', 'out_credit_note']),
             },
         depends=['type'])
+
+    @classmethod
+    def __register__(cls, module_name):
+        TableHandler = backend.get('TableHandler')
+        cursor = Transaction().cursor
+        super(Invoice, cls).__register__(module_name)
+        table = TableHandler(cursor, cls, module_name)
+        table.not_null_action('shop', 'remove')
 
     @staticmethod
     def default_shop():
