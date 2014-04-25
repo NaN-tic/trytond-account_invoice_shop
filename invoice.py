@@ -45,5 +45,7 @@ class Invoice:
 
     def _credit(self):
         res = super(Invoice, self)._credit()
-        res['shop'] = getattr(self, 'shop').id
+        shop = getattr(self, 'shop')
+        if shop:
+            res['shop'] = shop.id
         return res
