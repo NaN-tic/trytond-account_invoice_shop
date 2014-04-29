@@ -12,5 +12,14 @@
             <field name="inherit" ref="account_invoice.invoice_view_tree"/>
             <field name="name">invoice_tree</field>
         </record>
+
+        <record model="ir.rule.group" id="rule_group_invoice">
+            <field name="model" search="[('model', '=', 'account.invoice')]"/>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_invoice1">
+            <field name="domain">[('shop', 'in', [s.id for s in user.shops])]</field>
+            <field name="rule_group" ref="rule_group_invoice"/>
+        </record>
     </data>
 </tryton>
