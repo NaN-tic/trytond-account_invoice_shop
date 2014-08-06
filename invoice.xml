@@ -18,7 +18,7 @@
             <field name="global_p" eval="True"/>
         </record>
         <record model="ir.rule" id="rule_invoice1">
-            <field name="domain">[('shop', 'in', [s.id for s in user.shops])]</field>
+            <field name="domain">[['OR', ('shop', '=', None), ('shop', 'in', [s.id for s in user.shops])]]</field>
             <field name="rule_group" ref="rule_group_invoice"/>
         </record>
     </data>
