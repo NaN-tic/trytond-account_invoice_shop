@@ -26,8 +26,10 @@ class Invoice:
     shop = fields.Many2One('sale.shop', 'Shop',
         states={
             'required': Eval('type').in_(['out_invoice', 'out_credit_note']),
+            'readonly': ((Eval('state') != 'draft')
+                | (Eval('lines', [0]) & Eval('currency'))),
             },
-        depends=['type'])
+        depends=['type', 'state'])
 
     @classmethod
     def __register__(cls, module_name):
@@ -37,11 +39,26 @@ class Invoice:
         table = TableHandler(cursor, cls, module_name)
         table.not_null_action('shop', 'remove')
 
+    @classmethod
+    def __setup__(cls):
+        super(Invoice, cls).__setup__()
+        cls.currency.states['readonly'] |= Eval('shop')
+        cls.currency.depends.append('shop')
+
+
     @staticmethod
     def default_shop():
         User = Pool().get('res.user')
         user = User(Transaction().user)
         return user.shop.id if user.shop else None
+
+    @fields.depends('shop')
+    def on_change_shop(self):
+        if not self.shop:
+            return {}
+        return {
+            'currency': self.shop.currency.id if self.shop.currency else None,
+            }
 
     def _credit(self):
         res = super(Invoice, self)._credit()
