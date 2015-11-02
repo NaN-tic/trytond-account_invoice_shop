@@ -45,7 +45,6 @@ class Invoice:
         cls.currency.states['readonly'] |= Eval('shop')
         cls.currency.depends.append('shop')
 
-
     @staticmethod
     def default_shop():
         User = Pool().get('res.user')
