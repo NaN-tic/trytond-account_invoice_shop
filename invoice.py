@@ -34,9 +34,8 @@ class Invoice:
     @classmethod
     def __register__(cls, module_name):
         TableHandler = backend.get('TableHandler')
-        cursor = Transaction().cursor
         super(Invoice, cls).__register__(module_name)
-        table = TableHandler(cursor, cls, module_name)
+        table = TableHandler(cls, module_name)
         table.not_null_action('shop', 'remove')
 
     @classmethod
