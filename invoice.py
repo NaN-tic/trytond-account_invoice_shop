@@ -14,8 +14,8 @@ __metaclass__ = PoolMeta
 class Sale:
     __name__ = 'sale.sale'
 
-    def _get_invoice_sale(self, invoice_type):
-        invoice = super(Sale, self)._get_invoice_sale(invoice_type)
+    def _get_invoice_sale(self):
+        invoice = super(Sale, self)._get_invoice_sale()
         invoice.shop = self.shop
         return invoice
 
