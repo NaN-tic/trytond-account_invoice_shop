@@ -8,10 +8,10 @@ from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
 
 __all__ = ['Sale', 'Invoice']
-__metaclass__ = PoolMeta
 
 
 class Sale:
+    __metaclass__ = PoolMeta
     __name__ = 'sale.sale'
 
     def _get_invoice_sale(self):
@@ -21,6 +21,7 @@ class Sale:
 
 
 class Invoice:
+    __metaclass__ = PoolMeta
     __name__ = 'account.invoice'
 
     shop = fields.Many2One('sale.shop', 'Shop',
@@ -52,11 +53,8 @@ class Invoice:
 
     @fields.depends('shop')
     def on_change_shop(self):
-        if not self.shop:
-            return {}
-        return {
-            'currency': self.shop.currency.id if self.shop.currency else None,
-            }
+        if self.shop and self.shop.currency:
+            self.currency = self.shop.currency
 
     def _credit(self):
         res = super(Invoice, self)._credit()
