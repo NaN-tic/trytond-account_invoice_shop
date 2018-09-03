@@ -10,8 +10,7 @@ from trytond.pyson import Eval
 __all__ = ['Sale', 'Invoice']
 
 
-class Sale:
-    __metaclass__ = PoolMeta
+class Sale(metaclass=PoolMeta):
     __name__ = 'sale.sale'
 
     def _get_invoice_sale(self):
@@ -20,8 +19,7 @@ class Sale:
         return invoice
 
 
-class Invoice:
-    __metaclass__ = PoolMeta
+class Invoice(metaclass=PoolMeta):
     __name__ = 'account.invoice'
 
     shop = fields.Many2One('sale.shop', 'Shop',
