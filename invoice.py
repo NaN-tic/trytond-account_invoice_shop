@@ -24,7 +24,7 @@ class Invoice(metaclass=PoolMeta):
 
     shop = fields.Many2One('sale.shop', 'Shop',
         states={
-            'required': Eval('type').in_(['out_invoice', 'out_credit_note']),
+            'required': Eval('type').in_(['out']),
             'readonly': ((Eval('state') != 'draft')
                 | (Eval('lines', [0]) & Eval('currency'))),
             },
