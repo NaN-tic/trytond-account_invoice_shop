@@ -32,9 +32,8 @@ class Invoice(metaclass=PoolMeta):
 
     @classmethod
     def __register__(cls, module_name):
-        TableHandler = backend.get('TableHandler')
         super(Invoice, cls).__register__(module_name)
-        table = TableHandler(cls, module_name)
+        table = backend.TableHandler(cls, module_name)
         table.not_null_action('shop', 'remove')
 
     @classmethod
