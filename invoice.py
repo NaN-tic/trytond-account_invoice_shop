@@ -58,5 +58,5 @@ class Invoice(metaclass=PoolMeta):
         res = super(Invoice, self)._credit()
         shop = getattr(self, 'shop')
         if shop:
-            res['shop'] = shop.id
+            res.shop = shop
         return res
