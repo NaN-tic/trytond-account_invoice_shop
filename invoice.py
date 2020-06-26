@@ -53,8 +53,8 @@ class Invoice(metaclass=PoolMeta):
         if self.shop and self.shop.currency:
             self.currency = self.shop.currency
 
-    def _credit(self):
-        res = super(Invoice, self)._credit()
+    def _credit(self, **values):
+        res = super(Invoice, self)._credit(**values)
         shop = getattr(self, 'shop')
         if shop:
             res['shop'] = shop.id
