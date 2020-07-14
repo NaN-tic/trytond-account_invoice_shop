@@ -24,7 +24,6 @@ class Invoice(metaclass=PoolMeta):
 
     shop = fields.Many2One('sale.shop', 'Shop',
         states={
-            'required': Eval('type').in_(['out']),
             'readonly': ((Eval('state') != 'draft')
                 | (Eval('lines', [0]) & Eval('currency'))),
             },
@@ -53,9 +52,7 @@ class Invoice(metaclass=PoolMeta):
         if self.shop and self.shop.currency:
             self.currency = self.shop.currency
 
-    def _credit(self, **values):
-        res = super(Invoice, self)._credit(**values)
-        shop = getattr(self, 'shop')
-        if shop:
-            res['shop'] = shop.id
-        return res
+    def _credit(self):
+        credit = super(Invoice, self)._credit()
+        credit.shop = self.shop
+        return credit
