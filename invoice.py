@@ -37,7 +37,7 @@ class Invoice(metaclass=PoolMeta):
     def __setup__(cls):
         super(Invoice, cls).__setup__()
         cls.currency.states['readonly'] |= Eval('shop')
-        cls.currency.depends.append('shop')
+        cls.currency.depends.add('shop')
 
     @staticmethod
     def default_shop():
