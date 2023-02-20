@@ -20,12 +20,14 @@ class Sale(metaclass=PoolMeta):
 class Invoice(metaclass=PoolMeta):
     __name__ = 'account.invoice'
 
-    shop = fields.Many2One('sale.shop', 'Shop',
+    shop = fields.Many2One('sale.shop', 'Shop', domain=[
+            ('company', '=', Eval('company')),
+        ],
         states={
             'readonly': ((Eval('state') != 'draft')
                 | (Eval('lines', [0]) & Eval('currency'))),
             },
-        depends=['type', 'state'])
+        depends=['type', 'state', 'company'])
 
     @classmethod
     def __register__(cls, module_name):
