@@ -140,7 +140,7 @@ Sale 5 products::
     >>> sale.click('quote')
     >>> sale.click('confirm')
     >>> sale.invoice_state
-    'waiting'
+    'pending'
     >>> invoice, = sale.invoices
     >>> invoice.shop == sale.shop
     True
