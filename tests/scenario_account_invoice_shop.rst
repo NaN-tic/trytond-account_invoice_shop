@@ -99,14 +99,14 @@ Create payment term::
 Create product price list::
 
     >>> ProductPriceList = Model.get('product.price_list')
-    >>> product_price_list = ProductPriceList()
-    >>> product_price_list.name = 'Price List'
-    >>> product_price_list.company = company
-    >>> product_price_list.save()
+    >>> price_list = ProductPriceList(name='Price List', price='list_price')
+    >>> price_list_line = price_list.lines.new()
+    >>> price_list_line.formula = 'unit_price'
+    >>> price_list.save()
 
 Create Sale Shop::
 
-    >>> shop = create_shop(payment_term, product_price_list)
+    >>> shop = create_shop(payment_term, price_list)
     >>> shop.save()
 
 Save Sale Shop User::
