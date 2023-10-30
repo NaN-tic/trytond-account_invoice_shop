@@ -14,16 +14,16 @@ this repository contains the full copyright notices and license terms. -->
             <field name="name">invoice_tree</field>
         </record>
 
-        <record model="ir.rule.group" id="rule_group_invoice">
-            <field name="name">Invoice Shop Rule</field>
+        <record model="ir.rule.group" id="rule_group_invoice_shops">
+            <field name="name">User in shops</field>
             <field name="model" search="[('model', '=', 'account.invoice')]"/>
             <field name="global_p" eval="True"/>
         </record>
-        <record model="ir.rule" id="rule_invoice1">
+        <record model="ir.rule" id="rule_invoice_shops">
             <field name="domain"
-                eval="[['OR', ('shop', '=', None), ('shop', 'in', Eval('user', {}).get('shops', []))]]"
+                eval="[['OR', ('shop', '=', None), ('shop', 'in', Eval('shops', []))]]"
                 pyson="1"/>
-            <field name="rule_group" ref="rule_group_invoice"/>
+            <field name="rule_group" ref="rule_group_invoice_shops"/>
         </record>
     </data>
 </tryton>
