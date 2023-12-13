@@ -26,6 +26,7 @@ class Invoice(metaclass=PoolMeta):
         states={
             'readonly': ((Eval('state') != 'draft')
                 | (Eval('lines', [0]) & Eval('currency'))),
+            'invisible': (Eval('type') != 'out'),
             },
         depends=['type', 'state', 'company'])
 
