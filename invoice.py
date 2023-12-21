@@ -26,7 +26,6 @@ class Invoice(metaclass=PoolMeta):
         states={
             'readonly': ((Eval('state') != 'draft')
                 | (Eval('lines', [0]) & Eval('currency'))),
-            'invisible': (Eval('type') != 'out'),
             },
         depends=['type', 'state', 'company'])
 
@@ -42,16 +41,26 @@ class Invoice(metaclass=PoolMeta):
         cls.currency.states['readonly'] |= Eval('shop')
         cls.currency.depends.add('shop')
 
-    @staticmethod
-    def default_shop():
-        User = Pool().get('res.user')
-        user = User(Transaction().user)
-        return user.shop.id if user.shop else None
-
     @fields.depends('shop')
     def on_change_shop(self):
         if self.shop and self.shop.currency:
             self.currency = self.shop.currency
+
+    @fields.depends(methods=['set_shop'])
+    def on_change_type(self):
+        super().on_change_type()
+        self.set_shop()
+
+    @fields.depends('type', 'shop')
+    def set_shop(self):
+        User = Pool().get('res.user')
+
+        if self.type == 'out':
+            user = User(Transaction().user)
+            if not self.shop:
+                self.shop = user.shop
+        else:
+            self.shop = None
 
     def _credit(self, **values):
         credit = super(Invoice, self)._credit(**values)
