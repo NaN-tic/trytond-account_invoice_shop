@@ -157,3 +157,15 @@ Post and credit invoice::
     True
     >>> credit_note.untaxed_amount == Decimal('-200.00')
     True
+
+Test shop and invoice type::
+
+    >>> Invoice = Model.get('account.invoice')
+    >>> invoice = Invoice()
+    >>> invoice.type == 'out'
+    True
+    >>> invoice.shop == shop
+    True
+    >>> invoice.type = 'in'
+    >>> invoice.shop == None
+    True
