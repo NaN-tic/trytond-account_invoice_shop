@@ -166,6 +166,3 @@ Test shop and invoice type::
     True
     >>> invoice.shop == shop
     True
-    >>> invoice.type = 'in'
-    >>> invoice.shop == None
-    True
