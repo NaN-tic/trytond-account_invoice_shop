@@ -59,8 +59,6 @@ class Invoice(metaclass=PoolMeta):
             user = User(Transaction().user)
             if not self.shop:
                 self.shop = user.shop
-        else:
-            self.shop = None
 
     def _credit(self, **values):
         credit = super(Invoice, self)._credit(**values)
