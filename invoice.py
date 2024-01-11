@@ -26,8 +26,7 @@ class Invoice(metaclass=PoolMeta):
         states={
             'readonly': ((Eval('state') != 'draft')
                 | (Eval('lines', [0]) & Eval('currency'))),
-            },
-        depends=['type', 'state', 'company'])
+            })
 
     @classmethod
     def __register__(cls, module_name):
