@@ -11,8 +11,8 @@ from trytond.pyson import Eval
 class Sale(metaclass=PoolMeta):
     __name__ = 'sale.sale'
 
-    def _get_invoice_sale(self):
-        invoice = super(Sale, self)._get_invoice_sale()
+    def _get_invoice(self):
+        invoice = super(Sale, self)._get_invoice()
         invoice.shop = self.shop
         return invoice
 
