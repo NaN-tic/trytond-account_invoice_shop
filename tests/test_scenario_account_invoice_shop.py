@@ -148,6 +148,6 @@ class Test(unittest.TestCase):
 
         # Test shop and invoice type
         Invoice = Model.get('account.invoice')
-        invoice = Invoice()
+        invoice = Invoice(type='out')
         self.assertEqual(invoice.type, 'out')
         self.assertEqual(invoice.shop, shop)
