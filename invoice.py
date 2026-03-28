@@ -21,7 +21,7 @@ class Invoice(metaclass=PoolMeta):
     __name__ = 'account.invoice'
 
     shop = fields.Many2One('sale.shop', 'Shop', domain=[
-            ('company', '=', Eval('company')),
+            ('company', '=', Eval('company', -1)),
         ],
         states={
             'readonly': ((Eval('state') != 'draft')
