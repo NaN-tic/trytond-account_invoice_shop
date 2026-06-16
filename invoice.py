@@ -1,7 +1,6 @@
 # This file is part account_invoice_shop module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
-from trytond import backend
 from trytond.model import fields
 from trytond.transaction import Transaction
 from trytond.pool import Pool, PoolMeta
@@ -31,7 +30,7 @@ class Invoice(metaclass=PoolMeta):
     @classmethod
     def __register__(cls, module_name):
         super(Invoice, cls).__register__(module_name)
-        table = backend.TableHandler(cls, module_name)
+        table = cls.__table_handler__(module_name)
         table.not_null_action('shop', 'remove')
 
     @classmethod
