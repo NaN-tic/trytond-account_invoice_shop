@@ -23,8 +23,8 @@ class Invoice(metaclass=PoolMeta):
             ('company', '=', Eval('company', -1)),
         ],
         states={
-            'readonly': ((Eval('state') != 'draft')
-                | (Eval('lines', [0]) & Eval('currency'))),
+            'readonly': Eval('state') != 'draft',
+            'editable': ~(Eval('lines', [0]) & Eval('currency')),
             })
 
     @classmethod
@@ -36,7 +36,7 @@ class Invoice(metaclass=PoolMeta):
     @classmethod
     def __setup__(cls):
         super(Invoice, cls).__setup__()
-        cls.currency.states['readonly'] |= Eval('shop')
+        cls.currency.states['editable'] &= ~Eval('shop')
         cls.currency.depends.add('shop')
 
     @fields.depends('shop')
